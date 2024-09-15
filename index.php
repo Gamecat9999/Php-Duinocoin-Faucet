@@ -99,8 +99,8 @@ if (file_exists($cooldownFile)) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = "katfaucet";
     $recipient = $_POST["username"];
-    $password = "Stayout1";
-    $memo = "KatFaucet CLAIM";
+    $password = "ENTERPASSWORDHERE";
+    $memo = "Faucet CLAIM";
     $amount = "10";
     $currentTime = time(); // Get the current time
      // Check if the cooldown data array is not null
