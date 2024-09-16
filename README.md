@@ -1,2 +1,2 @@
 # Php-Duinocoin-Faucet
-This is a PHP duinocoin faucet developed by Gamecat999. See a live version of the project here https://kf.stormsurge.xyz/. If you want to host your own make sure to have http extension activated on your php.ini file
+This is a PHP duinocoin faucet developed by Gamecat999. See a live version of the project here https://kf.stormsurge.xyz/. This Faucet Template has a Math captcha that has the user Solve a math problem before it sends in the request. I have tried to find free hosting online to no avail so either pay for some hosting service or self host. For more help Join our discord server https://discord.gg/HUbHqUQUD2
