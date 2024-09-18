@@ -144,10 +144,11 @@ window.matchMedia("(prefers-color-scheme: dark)").addListener(applyDarkMode);
 <h2>Enter your username below to get 0.01-10 free Duinocoin Once a Day!</h2>
 
 
+
 <form action="" method="post" onsubmit="return validateForm()">
     <label for="username">Enter your username:</label>
     <input type="text" id="username" name="username" required>
-    <div class="g-recaptcha" data-sitekey="ENTERYOURRECAPTCHASITEKEYHERE "></div>
+    <div class="g-recaptcha" data-sitekey="6Ld0iUcqAAAAAF-pbigYVRslGNaTr_zmilPa1Mj9"></div>
     <input type="submit" value="Get DUCOS">
 </form>
 <script>
@@ -172,7 +173,7 @@ function validateForm() {
 <?php
 // File path to store the cooldown data
 $cooldownFile = 'cooldown.txt';
-
+$blacklistFile = 'blacklist.txt';
 // Initialize the cooldown data array
 $cooldownData = array();
 $cooldownTime = 86400;
@@ -184,13 +185,19 @@ if (file_exists($cooldownFile)) {
         file_put_contents($cooldownFile, json_encode($cooldownData));
     }
 
+$blacklistData = array();
+// Read the blacklist data from the file if it exists
+if (file_exists($blacklistFile)) {
+    $blacklistData = file($blacklistFile, FILE_IGNORE_NEW_LINES);
+}
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = "USername_here";
+    $username = "YOURUSERNAMEHERE";
     $recipient = $_POST["username"];
-    $password = "PasswordHere";
-    $memo = "Faucet claim";
-    // number randomiser. if you want a single number deleted the mt_rand and replace with a integer and a ;
+    $password = "YOUR_USERNAME_HERE";
+    $memo = "Faucet Claim";
+    //change the amount of the claim
     $amount = mt_rand(1, 1000) / 100;
     $currentTime = time(); // Get the current time
     
@@ -203,6 +210,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Please wait for " . $remainingTime . " Seconds before claiming again.";
             exit;
         }
+    }
+    // Check if the recipient's username is in the blacklist
+    if (in_array($recipient, $blacklistData)) {
+        echo "Sorry, this username is not allowed to use the faucet.";
+        exit;
     }
     
    
@@ -218,7 +230,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $transactionData = json_decode($response, true);
 
         if (isset($transactionData['success']) && $transactionData['success']) {
-            echo "Transaction successful. Sent ". $amount . " to " . $recipient, $transactionData['transaction'];
+            echo "Transaction successful. Sent ". $amount . " to " . $recipient . ". Transaction id ", 
+           
             // Update the last submit time in the cooldown data
             $cooldownData[$recipient] = $currentTime;
             // Save the updated cooldown data to the file
