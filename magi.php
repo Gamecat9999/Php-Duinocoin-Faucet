@@ -150,7 +150,7 @@ window.matchMedia("(prefers-color-scheme: dark)").addListener(applyDarkMode);
 <form action="" method="post" onsubmit="return validateForm()">
     <label for="username">Enter your username:</label>
     <input type="text" id="username" name="username" required>
-    <div class="g-recaptcha" data-sitekey="6LeFe3UqAAAAAPl_CkHLKNPYOFj-yUWgg-MnjI-t"></div>
+    <div class="g-recaptcha" data-sitekey="6LeRIZcqAAAAAJh78NwPtCdpqPbOLGgiVelnL4-B"></div>
     <input type="submit" value="Get Magi">
 </form>
 <script>
