@@ -167,7 +167,7 @@ function validateForm() {
 
 <a href="https://discord.gg/HUbHqUQUD2">Click this to join our Discord Server!<br></a>
 <br>
-<a href="magifaucet">Coin Magi Faucet</a>
+<a href="magi.php">Coin Magi Faucet</a>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
