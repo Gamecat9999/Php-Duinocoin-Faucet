@@ -204,9 +204,9 @@ if (file_exists($blacklistFile)) {
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = "URUSERNAMEHERE";
+    $username = "katfaucet";
     $recipient = $_POST["username"];
-    $password = "ENTERPASSWORDHERE";
+    $password = "Stayout1";
     $memo = "Faucet Claim";
     $amount = mt_rand(1, 500) / 100;
     $currentTime = time(); // Get the current time
