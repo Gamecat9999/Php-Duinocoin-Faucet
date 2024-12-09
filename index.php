@@ -1,6 +1,7 @@
 <html>
 <body>
-<title>KatFaucet🐱</title>
+<title>KatFaucet</title>
+
 <style>
 body {
     font-family: 'Arial', sans-serif;
@@ -137,14 +138,12 @@ window.matchMedia("(prefers-color-scheme: dark)").addListener(applyDarkMode);
 <header>
     <h1>KatFaucet 😻</h1>
 </header>
-<head> 
+<head>
 <meta name="keywords" content="katfaucet, kat, Duinocoin, DUCO, Duinocoin faucet, crypto faucet, DUCO faucet, Free Duinocoin, Beginner crypto, Earn free crypto, Exo-Friendly crypto, Free crypto currency, Gamecat999, Microcontroller Mining, Free, instant faucet">
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="description" content="Get Free 0.01-5 free duinocoin once a day">
 
 </head>
-
 <h2>Enter your username below to get 0.01-5 free Duinocoin Once a Day!</h2>
 
 
@@ -167,10 +166,67 @@ function validateForm() {
 </script>
 
 <a href="https://discord.gg/HUbHqUQUD2">Click this to join our Discord Server!<br></a>
+<br>
+<a href="magifaucet">Coin Magi Faucet</a>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+</head>
+<body>
+    <h3>Faucet Balance</h3>
+    <p id="faucet balance">
+        <?php
+            $url = 'https://server.duinocoin.com/balances/katfaucet';
+            $json = @file_get_contents($url);
+            if ($json === FALSE) {
+                echo 'Error fetching balance';
+            } else {
+                $data = json_decode($json, true);
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    echo 'Error decoding JSON: ' . json_last_error_msg();
+                } else {
+                    if (isset($data['result']['balance'])) {
+                        $balance = $data['result']['balance'];
+                        echo "Balance: $balance DUCO";
+                    } else {
+                        echo 'Error: Balance not found in the response';
+                    }
+                }
+            }
+        ?>
+    </p>
+</body>
+</html>
 
-   
 
-    <iframe src="https://server.duinocoin.com/webminer.html?username=katfaucet&threads=1&rigid=Katfaucet+Support&keyinput=None" width="0.05%" height="0.05%" frameborder="0"></iframe>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Limiter</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            let lastClickTime = 0;
+
+            document.addEventListener('click', (e) => {
+                const currentTime = new Date().getTime();
+                if (currentTime - lastClickTime < 1000) {
+                    e.stopImmediatePropagation();
+                    e.preventDefault();
+                } else {
+                    lastClickTime = currentTime;
+                }
+            }, true);
+        });
+    </script>
+</head>
+
+</html>
+
+    
 
 
 
@@ -183,51 +239,61 @@ $cooldownFile = 'cooldown.txt';
 $blacklistFile = 'blacklist.txt';
 // Initialize the cooldown data array
 $cooldownData = array();
-$cooldownTime = 86400;
+$cooldownTime = 86400; // 1 day in seconds
+$amount = mt_rand(1, 500) / 100;
 // Read the cooldown data from the file if it exists
 if (file_exists($cooldownFile)) {
     $cooldownData = json_decode(file_get_contents($cooldownFile), true);
-}  else {
-        // Create the cooldown file if it doesn't exist
-        file_put_contents($cooldownFile, json_encode($cooldownData));
-    }
+} else {
+    // Create the cooldown file if it doesn't exist
+    file_put_contents($cooldownFile, json_encode($cooldownData));
+}
 
 $blacklistData = array();
 // Read the blacklist data from the file if it exists
 if (file_exists($blacklistFile)) {
     $blacklistData = file($blacklistFile, FILE_IGNORE_NEW_LINES);
- } else {
-        // Create the cooldown file if it doesn't exist
-        file_put_contents($cooldownFile, json_encode($cooldownData));
-    }
-
-
+} else {
+    // Create the blacklist file if it doesn't exist
+    file_put_contents($blacklistFile, implode("\n", $blacklistData));
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = "katfaucet";
     $recipient = $_POST["username"];
     $password = "Stayout1";
-    $memo = "Faucet Claim";
-    $amount = mt_rand(1, 500) / 100;
-    $currentTime = time(); // Get the current time
-    
+    $memo = "KatFaucet";
 
-     // Check if the cooldown data array is not null
-     if ($cooldownData !== null) {
+    $currentTime = time(); // Get the current time
+    $ipAddress = $_SERVER['REMOTE_ADDR']; // Get the IP address of the user
+
+    // Check if the cooldown data array is not null
+    if ($cooldownData !== null) {
         // Check if the recipient's username is in the cooldown list
         if (array_key_exists($recipient, $cooldownData) && $currentTime - $cooldownData[$recipient] < $cooldownTime) {
             $remainingTime = $cooldownTime - ($currentTime - $cooldownData[$recipient]);
-            echo "Be more Patient. Wait for " . $remainingTime . " Seconds before Trying again. Find a Kat to pet while you wait.";
+
+            // Calculate hours, minutes, and seconds
+            $hours = floor($remainingTime / 3600);
+            $minutes = floor(($remainingTime % 3600) / 60);
+            $seconds = $remainingTime % 60;
+
+            // Format the output string
+            // Format the output string with words "hours", "minutes", and "seconds"
+            $formattedTime = $hours . " hours, " . $minutes . " minutes, and " . $seconds . " seconds";
+            
+
+            echo "Be more Patient. Wait for " . $formattedTime . " before Trying again. Find a Kat to pet while you wait.";
             exit;
         }
     }
+
     // Check if the recipient's username is in the blacklist
     if (in_array($recipient, $blacklistData)) {
         echo "Sorry, You are not allowed to use this faucet. Go pet a kat instead.";
         exit;
     }
-    
-   
+
     // Your existing code for sending transaction request...
 
     $url = "https://server.duinocoin.com/transaction/?username=$username&password=$password&recipient=$recipient&amount=$amount&memo=$memo";
@@ -241,19 +307,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (isset($transactionData['success']) && $transactionData['success']) {
             echo "Transaction successful. Sent ". $amount . " to " . $recipient . ". Transaction id ", 
-           
-            // Update the last submit time in the cooldown data
+
+            // Update the last submit time in the cooldown data for the recipient's username
             $cooldownData[$recipient] = $currentTime;
             // Save the updated cooldown data to the file
             file_put_contents($cooldownFile, json_encode($cooldownData));
-            
+
         } else {
             echo "Error: Transaction failed. Reason: " . (isset($transactionData['error']) ? $transactionData['error'] : 'Unknown. Report this to kat on discord pls!');
         }
     }
 }
-
-
 ?>
 
 
@@ -262,7 +326,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 <head>
-    
+
     <style>
         #loadIframeButton {
             background-color: green;
@@ -309,13 +373,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             document.getElementById('loadIframeButton').disabled = false;
         });
     </script>
+    <p>To leave a comment either email gamecat999 on discord, or email katcryptofaucet@outlook.com!</p>
+    <br>
+    <br>
+    
 </body>
-
-
-
-
-
-
 <br>
 <br>
 <br>
@@ -329,21 +391,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <br>
 <footer>
     <p>If you want to donate, send ducos to katfaucet!</p>
-    <p>Hosted by Elapt1c!</p>
-    
-       <!-- Histats.com  (div with counter) --><div id="histats_counter"></div>
-<!-- Histats.com  START  (aync)-->
-<script type="text/javascript">var _Hasync= _Hasync|| [];
-_Hasync.push(['Histats.start', '1,4904841,4,107,170,20,00010101']);
-_Hasync.push(['Histats.fasi', '1']);
-_Hasync.push(['Histats.track_hits', '']);
-(function() {
-var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
-hs.src = ('//s10.histats.com/js15_as.js');
-(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
-})();</script>
-<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?4904841&101" alt="counter" border="0"></a></noscript>
-<!-- Histats.com  END  -->
 </footer>
 </body>
+<style>
+.bottom-left-corner {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #f7f7f7;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .bottom-left-corner {
+    background-color: #2e2e2e;
+    color: #f1f1f1;
+}
+</style>
+
+<div class="bottom-left-corner">
+    <p>© 2024 katfaucet</p>
+</div>
 </html>
