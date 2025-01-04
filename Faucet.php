@@ -7,8 +7,8 @@ class Faucet
 {
     private $apiUrl = "https://server.duinocoin.com/";
     
-    private $cooldownFile = 'cooldown.txt';
-    private $blacklistFile = 'blacklist.txt';
+    private $cooldownFile = 'data/cooldown.txt';
+    private $blacklistFile = 'data/blacklist.txt';
     private $cooldownData = [];
     private $blacklistData = [];
     private $cooldownTime = 86400; // 24 hours in seconds
@@ -19,7 +19,7 @@ class Faucet
     public function __construct()
     {
         //set the environment variables.
-        $this->wallet_username = $_ENV['wallet_username'] ?? "tbwcjw";
+        $this->wallet_username = $_ENV['wallet_username'] ?? "katfaucet";
         $this->wallet_password = $_ENV['wallet_password'] ?? "";
 
         $this->loadCooldownData();
