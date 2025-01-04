@@ -1,0 +1,143 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 128px;
+    padding: 0;
+    background-color: #f7f7f7;
+    color: #333;
+    text-align: center;
+}
+
+body.dark-mode {
+    background-color: #1c1c1c;
+    color: #f1f1f1;
+}
+
+header {
+    background-color: #ffcc00;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    color: #333;
+}
+
+body.dark-mode header {
+    background-color: #ffb300;
+}
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+body.dark-mode form {
+    background-color: #2e2e2e;
+}
+
+form label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+form input[type="text"],
+form input[type="submit"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+form input[type="submit"] {
+    background-color: #ffcc00;
+    color: #333;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+form input[type="submit"]:hover {
+    background-color: #ffaa00;
+}
+
+body.dark-mode form input[type="text"],
+body.dark-mode form input[type="submit"] {
+    background-color: #444;
+    color: white;
+}
+
+a {
+    color: #ffcc00;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+body.dark-mode a {
+    color: #ff9900;
+}
+
+img {
+    width: 100%;
+    max-width: 400px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    background-color: #ffcc00;
+    padding: 10px;
+    color: #333;
+    position: fixed;
+    width: 100%;
+    margin-top: 25%;
+    bottom: 0;
+    left: 0;
+}
+
+body.dark-mode footer {
+    background-color: #ffb300;
+    color: #fff;
+}
+
+#loadIframeButton {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#disableButton {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.bottom-left-corner {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #f7f7f7;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .bottom-left-corner {
+    background-color: #2e2e2e;
+    color: #f1f1f1;
+}
