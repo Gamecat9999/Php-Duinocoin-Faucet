@@ -1,10 +1,11 @@
 <?php
+session_start();
 require_once __DIR__ . '/Faucet.php';
 
 $faucet = new Faucet();
 $faucet->handleRequest();
 $balance = $faucet->getFaucetBalance();
-
+$csrf = $faucet->getCSRF();
 ?>
 
 <!DOCTYPE html>
@@ -28,6 +29,7 @@ $balance = $faucet->getFaucetBalance();
     <form action="" method="POST">
         <label for="username">Enter your username:</label>
         <input type="text" id="username" name="username" required>
+        <input type="hidden" name="csrf_token" value="<?=$csrf?>" required>
         <div class="g-recaptcha" data-sitekey="6LeRIZcqAAAAAJh78NwPtCdpqPbOLGgiVelnL4-B"></div>
         <input type="submit" value="Get DUCOS">
         <a href="https://discord.gg/HUbHqUQUD2">Click this to join our Discord Server!<br></a>

@@ -15,15 +15,26 @@ class Faucet
     private $wallet_username;
     private $wallet_password;
     private $memo = 'KatFaucet';
+    private $csrf_token;
 
     public function __construct()
     {
         //set the environment variables.
         $this->wallet_username = $_ENV['wallet_username'] ?? "katfaucet";
         $this->wallet_password = $_ENV['wallet_password'] ?? "";
-
+        $this->csrf_token = $this->setToken();
         $this->loadCooldownData();
         $this->loadBlacklistData();
+    }
+
+    private function setToken(): string {
+        if (!isset($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(string: random_bytes(length: 32)); 
+        }
+        return $_SESSION['csrf_token'];
+    }
+    public function getCSRF(): string {
+        return $this->csrf_token;
     }
 
     private function loadCooldownData(): void
@@ -89,14 +100,26 @@ class Faucet
         return false;
     }
 
+    public function validateCSRF(string $token): bool {
+        if($this->csrf_token !== $token || $_SESSION['csrf_token'] !== $token) {
+            return false;
+        }
+        return true;
+    }
+
     public function handleRequest(): void
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $recipient = $this->sanitizeInput(input: $_POST["username"]);
+            $csrf = $this->sanitizeInput(input: $_POST["csrf_token"]);
 
             //you have this defined but never used.
             $ipAddress = $_SERVER['REMOTE_ADDR'];
             
+            if(!$this->validateCSRF(token: $csrf)) {
+                echo "Invalid CSRF token";
+                exit;
+            }
             //validate wallet address
             if(!$this->validateWalletAddress(wallet_address: $recipient)) {
                 echo "Invalid wallet address";
