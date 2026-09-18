@@ -1,17 +1,62 @@
-# Php-Duinocoin-Faucet
-This is a PHP duinocoin faucet developed by Gamecat999. See a live version of the project here https://katfaucet.com. It includes a local CAPTCHA and a blacklist of users who are banned from the faucet for security reasons. For more help join our Discord server: https://discord.gg/HUbHqUQUD2
+# KatFaucet
+
+KatFaucet is a PHP DuinoCoin faucet that sends a fixed 1 DUCO reward to a verified wallet once every 24 hours.
+
+Live site: https://katfaucet.com
+Discord: https://discord.gg/HUbHqUQUD2
+
+## Features
+
+- Fixed 1 DUCO payout per successful claim
+- SQLite-backed cooldowns, blacklist, rate limits, and claim history
+- Local arithmetic CAPTCHA with five-minute expiry
+- CSRF protection and strict wallet-name validation
+- Ten POST attempts per IP address every 15 minutes
+- Whole-number faucet balance display
+- Responsive KatFaucet interface with light and dark themes
+- Automatic import of existing cooldown and blacklist text files
+
+## Requirements
+
+- PHP 8.0 or newer
+- PHP cURL extension
+- PHP `pdo_sqlite` extension
+- A writable `data/` directory
+- A DuinoCoin faucet wallet
 
 ## Configuration
 
-The server must have PHP cURL and `pdo_sqlite` enabled. Configure these environment variables before serving the faucet:
+Set these environment variables before starting the application:
 
-- `WALLET_USERNAME`
-- `WALLET_PASSWORD`
-- `DUINOCOIN_API_URL` (optional; defaults to `https://server.duinocoin.com`)
+- `WALLET_USERNAME`: the faucet wallet username
+- `WALLET_PASSWORD`: the faucet wallet password
+- `DUINOCOIN_API_URL`: optional API base URL; defaults to `https://server.duinocoin.com`
 
-The CAPTCHA is generated and verified locally, so localhost does not need a Google reCAPTCHA key or external CAPTCHA service. On first startup, the application imports the existing files in `data/` into `data/faucet.sqlite`. Keep the SQLite database writable by the PHP process.
+Do not commit credentials or place them in PHP source files. The local CAPTCHA does not require Google reCAPTCHA credentials.
 
-POST requests are limited to 10 attempts per IP address every 15 minutes. This protects the faucet from rapid retries while leaving normal page loads unrestricted.
+## Local Setup
 
+From the project directory in PowerShell:
 
-![kf](https://github.com/user-attachments/assets/4d6c4a3b-0a69-4509-82ee-a58d85c03859)
+```powershell
+$env:WALLET_USERNAME = "katfaucet"
+$env:WALLET_PASSWORD = "your_wallet_password"
+php -S 127.0.0.1:8088 -t .
+```
+
+Open http://127.0.0.1:8088/ in a browser.
+
+The first request creates `data/faucet.sqlite` and imports existing state from:
+
+- `data/cooldown.txt`
+- `data/blacklist.txt`
+
+The SQLite database must remain writable by the PHP process.
+
+## Data and Security
+
+Successful claims are recorded in the SQLite `claims` table and displayed as a recent public history. Usernames are escaped before rendering. Wallet input is restricted to letters, numbers, and underscores before it reaches the API.
+
+The DuinoCoin transaction endpoint requires encoded GET parameters. Use HTTPS in production and avoid logging transaction URLs because they contain API credentials.
+
+The built-in PHP server is intended for local development only. Use a production web server with HTTPS, secure environment configuration, backups, and additional monitoring for a public deployment.
