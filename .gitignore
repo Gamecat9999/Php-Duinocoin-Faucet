@@ -1,0 +1,6 @@
+data/faucet.sqlite
+*.sqlite
+*.log
+.env
+.env.*
+.vscode/
