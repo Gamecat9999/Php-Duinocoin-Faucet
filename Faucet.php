@@ -83,7 +83,7 @@ final class Faucet
                 $this->walletPassword,
                 $recipient,
                 $amount,
-                'KatFaucet'
+                'katfaucet'
             );
             if (($transaction['success'] ?? false) !== true) {
                 $this->database->releaseClaim($recipient, $currentTime);

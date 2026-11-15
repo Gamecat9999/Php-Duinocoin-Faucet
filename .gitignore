@@ -3,4 +3,5 @@ data/faucet.sqlite
 *.log
 .env
 .env.*
+!.env.example
 .vscode/

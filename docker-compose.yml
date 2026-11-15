@@ -1,0 +1,11 @@
+services:
+  katfaucet:
+    build: .
+    container_name: katfaucet
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "8088:80"
+    volumes:
+      - ./data:/var/www/html/data
