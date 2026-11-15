@@ -26,7 +26,7 @@ final class Database
         $this->connection->exec('BEGIN IMMEDIATE');
         try {
             if ($this->isBlacklisted($walletAddress)) {
-                $this->connection->commit();
+                $this->connection->exec('COMMIT');
                 return 'Sorry, You are not allowed to use this faucet. Go pet a kat instead.';
             }
 
@@ -38,7 +38,7 @@ final class Database
                 $hours = intdiv($remainingTime, 3600);
                 $minutes = intdiv($remainingTime % 3600, 60);
                 $seconds = $remainingTime % 60;
-                $this->connection->commit();
+                $this->connection->exec('COMMIT');
                 return "Be more Patient. Wait for $hours hours, $minutes minutes, and $seconds seconds before trying again. Find a Kat to pet while you wait.";
             }
 
@@ -50,10 +50,10 @@ final class Database
                 'wallet_address' => $walletAddress,
                 'claimed_at' => $currentTime,
             ]);
-            $this->connection->commit();
+            $this->connection->exec('COMMIT');
             return null;
         } catch (Throwable $exception) {
-            $this->connection->rollBack();
+            $this->connection->exec('ROLLBACK');
             throw $exception;
         }
     }
@@ -109,12 +109,12 @@ final class Database
                     'ip_address' => $ipAddress,
                     'window_started' => $currentTime,
                 ]);
-                $this->connection->commit();
+                $this->connection->exec('COMMIT');
                 return null;
             }
 
             if ((int) $record['request_count'] >= $limit) {
-                $this->connection->commit();
+                $this->connection->exec('COMMIT');
                 return max(1, $window - ($currentTime - (int) $record['window_started']));
             }
 
@@ -122,10 +122,10 @@ final class Database
                 'UPDATE rate_limits SET request_count = request_count + 1 WHERE ip_address = :ip_address'
             );
             $statement->execute(['ip_address' => $ipAddress]);
-            $this->connection->commit();
+            $this->connection->exec('COMMIT');
             return null;
         } catch (Throwable $exception) {
-            $this->connection->rollBack();
+            $this->connection->exec('ROLLBACK');
             throw $exception;
         }
     }
