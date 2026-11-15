@@ -42,7 +42,8 @@ final class Faucet
         $recipient = Validation::sanitizeInput($_POST['username'] ?? '');
         $csrfToken = Validation::sanitizeInput($_POST['csrf_token'] ?? '');
         $captchaAnswer = Validation::sanitizeInput($_POST['captcha_answer'] ?? '');
-        $ipAddress = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+        $trustedProxyIp = getenv('TRUSTED_PROXY_IP') ?: '';
+        $ipAddress = Validation::getClientIp($_SERVER, $trustedProxyIp);
 
         try {
             $retryAfter = $this->database->consumeRateLimit($ipAddress, self::RATE_LIMIT, self::RATE_WINDOW);

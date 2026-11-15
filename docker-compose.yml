@@ -5,7 +5,30 @@ services:
     restart: unless-stopped
     env_file:
       - .env
+    environment:
+      TRUSTED_PROXY_IP: 172.30.0.2
     ports:
       - "8088:80"
     volumes:
       - ./data:/var/www/html/data
+    networks:
+      - faucet
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: katfaucet-cloudflared
+    restart: unless-stopped
+    profiles:
+      - tunnel
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN:-}
+    depends_on:
+      - katfaucet
+    networks:
+      faucet:
+        ipv4_address: 172.30.0.2
+
+networks:
+  faucet:
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24

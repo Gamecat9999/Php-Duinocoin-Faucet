@@ -69,6 +69,28 @@ This deployment works on a ZimaBlade running CasaOS or another Linux distributio
 
 5. From a device on your home network, open `http://ZIMABLADE_IP:8088/`. The first request creates `data/faucet.sqlite` and imports the legacy files from `data/` if the database is empty.
 
+### Publish with Cloudflare Tunnel
+
+Cloudflare Tunnel publishes the faucet over HTTPS without router access or inbound port forwarding. The domain remains registered at Namecheap, but its DNS is managed by Cloudflare after you change its nameservers. Changing nameservers removes any Namecheap URL redirect; recreate it in Cloudflare if you want to keep it.
+
+1. Add `iamsosmart.xyz` to a free Cloudflare account and select the Free plan. Review any imported DNS records, then change the domain's nameservers in Namecheap to the two nameservers Cloudflare provides. Wait until Cloudflare marks the domain active.
+2. In Cloudflare, create a remotely managed tunnel and copy its token. Keep the token private.
+3. On the ZimaBlade, add the token to `/DATA/AppData/katfaucet/.env`:
+
+   ```dotenv
+   CLOUDFLARE_TUNNEL_TOKEN='paste_the_tunnel_token_here'
+   ```
+
+4. In the tunnel dashboard, add a published application route for `faucet.iamsosmart.xyz` with service URL `http://katfaucet:80`.
+5. From the project directory, start the tunnel profile:
+
+   ```sh
+   sudo docker compose --profile tunnel up -d
+   sudo docker compose ps
+   ```
+
+The tunnel connector is assigned a fixed address so the faucet can safely use Cloudflare's `CF-Connecting-IP` header for per-visitor rate limits. If Docker reports that `172.30.0.0/24` overlaps an existing network, choose an unused private subnet and update that subnet and the tunnel address in `docker-compose.yml` together. Do not configure router port forwarding for this deployment.
+
 Useful commands from the project directory:
 
 ```sh

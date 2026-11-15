@@ -17,4 +17,21 @@ final class Validation
     {
         return $token !== '' && hash_equals($sessionToken, $token);
     }
+
+    public static function getClientIp(array $server, string $trustedProxyIp = ''): string
+    {
+        $remoteAddress = $server['REMOTE_ADDR'] ?? '';
+        if (!is_string($remoteAddress)) {
+            return 'unknown';
+        }
+
+        if ($trustedProxyIp !== '' && $remoteAddress === $trustedProxyIp) {
+            $cloudflareAddress = $server['HTTP_CF_CONNECTING_IP'] ?? '';
+            if (is_string($cloudflareAddress) && filter_var($cloudflareAddress, FILTER_VALIDATE_IP) !== false) {
+                return $cloudflareAddress;
+            }
+        }
+
+        return filter_var($remoteAddress, FILTER_VALIDATE_IP) !== false ? $remoteAddress : 'unknown';
+    }
 }
