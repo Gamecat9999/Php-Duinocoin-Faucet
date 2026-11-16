@@ -12,7 +12,8 @@ services:
     volumes:
       - ./data:/var/www/html/data
     networks:
-      - faucet
+      faucet:
+        ipv4_address: 172.30.0.3
 
   cloudflared:
     image: cloudflare/cloudflared:latest

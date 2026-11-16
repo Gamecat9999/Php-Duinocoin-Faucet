@@ -89,7 +89,7 @@ Cloudflare Tunnel publishes the faucet over HTTPS without router access or inbou
    sudo docker compose ps
    ```
 
-The tunnel connector is assigned a fixed address so the faucet can safely use Cloudflare's `CF-Connecting-IP` header for per-visitor rate limits. If Docker reports that `172.30.0.0/24` overlaps an existing network, choose an unused private subnet and update that subnet and the tunnel address in `docker-compose.yml` together. Do not configure router port forwarding for this deployment.
+The tunnel connector and faucet container use fixed addresses so the faucet can safely use Cloudflare's `CF-Connecting-IP` header for per-visitor rate limits. If Docker reports that `172.30.0.0/24` overlaps an existing network, choose an unused private subnet and update that subnet and both container addresses in `docker-compose.yml` together. Do not configure router port forwarding for this deployment.
 
 Useful commands from the project directory:
 
