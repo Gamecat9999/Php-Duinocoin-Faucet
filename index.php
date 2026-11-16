@@ -33,16 +33,32 @@ $claimGag = $claimGags[array_rand($claimGags)];
 <html lang="en">
 
 <head>
-    <title>katfaucet</title>
+    <title>KatFaucet | Free 1 DUCO DuinoCoin Faucet</title>
+    <meta name="description" content="Claim 1 DUCO from KatFaucet, a community DuinoCoin faucet. One claim per verified wallet every 24 hours.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://faucet.iamsosmart.xyz/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="KatFaucet">
+    <meta property="og:title" content="KatFaucet | Free 1 DUCO DuinoCoin Faucet">
+    <meta property="og:description" content="Claim 1 DUCO from KatFaucet, a community DuinoCoin faucet. One claim per verified wallet every 24 hours.">
+    <meta property="og:url" content="https://faucet.iamsosmart.xyz/">
+    <meta name="twitter:card" content="summary">
     <meta name="color-scheme" content="light dark">
     <script>
         document.documentElement.classList.toggle('dark-mode', window.matchMedia('(prefers-color-scheme: dark)').matches);
     </script>
     <link rel="stylesheet" href="assets/style.css">
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-    <meta name="keywords" content="katfaucet, kat, Duinocoin, DUCO, Duinocoin faucet, crypto faucet, DUCO faucet, Free Duinocoin, Beginner crypto, Earn free crypto, Exo-Friendly crypto, Free crypto currency, Gamecat999, Microcontroller Mining, Free, instant faucet">
     <script src="assets/app.js"></script>
-    <meta name="description" content="Claim 1 DUCO once a day from katfaucet">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "KatFaucet",
+            "url": "https://faucet.iamsosmart.xyz/",
+            "description": "A community DuinoCoin faucet offering one claim of 1 DUCO per verified wallet every 24 hours."
+        }
+    </script>
 </head>
 
 <body>

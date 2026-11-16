@@ -115,3 +115,7 @@ Successful claims are recorded in the SQLite `claims` table and displayed as a r
 The DuinoCoin transaction endpoint requires encoded GET parameters. Use HTTPS in production and avoid logging transaction URLs because they contain API credentials.
 
 The built-in PHP server is intended for local development only. Use a production web server with HTTPS, secure environment configuration, backups, and additional monitoring for a public deployment.
+
+## Search Engine Setup
+
+The public site provides `robots.txt` and `sitemap.xml` at the site root. In Google Search Console, submit `https://faucet.iamsosmart.xyz/sitemap.xml` for the verified domain property. Indexing and ranking are controlled by Google and are not guaranteed.
